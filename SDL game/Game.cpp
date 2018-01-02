@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
-
+#include <SDL_image.h>
+char *imgPath = "assets/animate-alpha.png";
 bool Game::init(const char* title, int xpos, int ypos, int width,
 	int height,bool fullScreen )
 {
@@ -46,16 +47,21 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	std::cout << "init success\n";
 	m_bRunning = true; // everything inited successfully,start the main loop
 
-	SDL_Surface* pTempSurface = SDL_LoadBMP("assets/rider.bmp");
+//	SDL_Surface* pTempSurface = SDL_LoadBMP("assets/rider.bmp");//采用下面的函数能加载更多类型的图片。
+//	SDL_Surface* pTempSurface = IMG_Load("assets/rider.bmp");
+	SDL_Surface* pTempSurface = IMG_Load("assets/animate-alpha.png");
+//	SDL_Surface* pTempSurface = IMG_Load(imgPath);
 	//这里用到了Renderer，所以需要在初始化完成render后才能获取Texture
 	m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer,pTempSurface);
 	SDL_FreeSurface(pTempSurface);
 	SDL_QueryTexture(m_pTexture, nullptr, nullptr, &m_sourceRectangle.w, &m_sourceRectangle.h);
-
+	m_sourceRectangle.w = 128;
 	m_destinationRectangle.x = m_sourceRectangle.x = 0;
 	m_destinationRectangle.y = m_sourceRectangle.y = 0;
-	m_destinationRectangle.w = m_sourceRectangle.w;
-	m_destinationRectangle.h = m_sourceRectangle.h;
+//	m_destinationRectangle.w = m_sourceRectangle.w;
+//	m_destinationRectangle.h = m_sourceRectangle.h;
+	m_destinationRectangle.w = 128;
+	m_destinationRectangle.h = 82;
 
 
 	return true;
@@ -71,7 +77,7 @@ void Game::render()
 void Game::update()
 {
 	//这里用时间getTick去控制显示动画的速度。
-//	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 
 }
 

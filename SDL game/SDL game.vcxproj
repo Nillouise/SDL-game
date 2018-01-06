@@ -150,6 +150,8 @@
   <ItemGroup>
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
@@ -158,6 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Maze.h" />
+    <ClInclude Include="Snake.h" />
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

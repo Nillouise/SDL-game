@@ -53,7 +53,10 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	{
 		return false;
 	}
-
+	if (!TheTextureManager::Instance()->loadRect("rect", m_pRenderer,10,10,255,0,0))
+	{
+		return false;
+	}
 //	SDL_Surface* pTempSurface = SDL_LoadBMP("assets/rider.bmp");//采用下面的函数能加载更多类型的图片。
 //	SDL_Surface* pTempSurface = IMG_Load("assets/rider.bmp");
 //	SDL_Surface* pTempSurface = IMG_Load("assets/animate-alpha.png");
@@ -80,8 +83,10 @@ void Game::render()
 //	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle,&m_destinationRectangle);
 	TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82,
 		m_pRenderer);
-//	TheTextureManager::Instance()->drawFrame("animate", 100, 100, 128, 82,
-//		1, m_currentFrame, m_pRenderer);
+	TheTextureManager::Instance()->draw("rect", 50, 100, 128, 82,
+		m_pRenderer);
+	TheTextureManager::Instance()->drawFrame("animate", 100, 100, 128, 82,
+		1, m_currentFrame, m_pRenderer);
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 

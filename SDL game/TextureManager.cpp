@@ -25,6 +25,22 @@ bool TextureManager::load(std::string fileName, std::string
 	return false;
 }
 
+bool TextureManager::loadRect(std::string id, SDL_Renderer* pRenderer, int width, int height, int r, int g, int b)
+{
+	SDL_Surface *pTempSurface = nullptr;
+	pTempSurface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+	SDL_FillRect(pTempSurface, NULL, SDL_MapRGB(pTempSurface->format, 255, 0, 0));
+	SDL_Texture* pTexture =
+		SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
+	SDL_FreeSurface(pTempSurface);
+	if (pTexture!=nullptr)
+	{
+		m_textureMap[id] = pTexture;
+		return true;
+	}
+	return false;
+}
+
 void TextureManager::draw(std::string id, int x, int y, int
 	width, int height, SDL_Renderer* pRenderer,
 	SDL_RendererFlip flip)

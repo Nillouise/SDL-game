@@ -74,7 +74,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL2-2.0.7\include;$(ProjectDir)\SDL2_image-2.0.2\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\asio;$(ProjectDir)\SDL2-2.0.7\include;$(ProjectDir)\SDL2_image-2.0.2\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\SDL2_image-2.0.2\lib\x64;$(ProjectDir)\SDL2-2.0.7\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,7 +82,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL2-2.0.7\include;$(ProjectDir)\SDL2_image-2.0.2\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\asio;$(ProjectDir)\SDL2-2.0.7\include;$(ProjectDir)\SDL2_image-2.0.2\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\SDL2_image-2.0.2\lib\x64;$(ProjectDir)\SDL2-2.0.7\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -104,7 +104,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);ASIO_STANDALONE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,7 +137,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);ASIO_STANDALONE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

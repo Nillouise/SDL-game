@@ -7,3 +7,23 @@
 4 注意configuration是64还是x86
 5 配置SDL image时，要把所有（4个以上）的dll文件都复制到执行目录里才行，不然加载png时既不报错，也无法显示图片
 
+后台应该怎么做？
+在handle那里需要处理对面网络的消息，那么问题来了，这网络是阻塞的还是非阻塞回调？还是说用阻塞多线程比较好？
+总的来说，就是另外一条蛇的数据是由对应的网络链接来操作的。
+先搞个网络库吧。
+感觉还要写个AI。双人对战，snake岂不是要从maze独立出来？ai操作也不能隔着maze呀。
+
+那么需要弄懂的功能就是ai编写，网络库使用，线程问题，游戏要增加输入框，以及一点文件读写功能。
+
+导入了asio库了，需要把头文件都复制到项目，然后在文件 那里贴
+	#define ASIO_STANDALONE 
+	#include <asio.hpp>
+这几行必须是摆在第一位置（或者好像是要摆在include window.h 前面？）
+如果不行，再加下面几个宏
+
+#define ASIO_HAS_STD_ADDRESSOF
+#define ASIO_HAS_STD_ARRAY
+#define ASIO_HAS_CSTDINT
+#define ASIO_HAS_STD_SHARED_PTR
+#define ASIO_HAS_STD_TYPE_TRAITS
+

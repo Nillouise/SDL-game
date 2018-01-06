@@ -9,6 +9,7 @@ std::pair<int,int> getRandomBall(int height,int width)
 	if (!init)
 	{
 		rng.seed(std::random_device()()); 
+		init = true;
 	}
 	std::uniform_int_distribution<std::mt19937::result_type> randomHeight(0, height-1);
 	std::uniform_int_distribution<std::mt19937::result_type> randomWidth(0, width-1);
@@ -27,12 +28,12 @@ bool conflict(const std::pair<int,int> &ball,const std::list<std::pair<int,int>>
 }
 bool Maze::changeDirection(int nextDirection)
 {
-	return snake.changedirect(nextDirection);
+	return snake->changedirect(nextDirection);
 }
 
 bool Maze::forward()
 {
-	Status st = snake.walk(ball);
+	Status st = snake->walk(ball);
 	if(st==Status::eatball)
 	{
 		std::pair<int, int> nextBall;
@@ -40,7 +41,7 @@ bool Maze::forward()
 		do
 		{
 			nextBall = getRandomBall(height, width);			
-		} while (conflict(ball, snake.body));
+		} while (conflict(ball, snake->body));
 		ball = nextBall;
 		return true;
 	}else if(st == Status::fail)
@@ -50,9 +51,17 @@ bool Maze::forward()
 	{
 		return true;
 	}
+	return false;
 }
 
 std::list<std::pair<int, int>> Maze::getSanke()
 {
-	return snake.body;
+	return snake->body;
+}
+
+bool Maze::init()
+{
+	delete snake;
+	snake = new Snake();
+	return true;
 }

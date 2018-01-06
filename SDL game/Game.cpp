@@ -96,7 +96,11 @@ void Game::update()
 //	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
 }
-
+int keyToDirect(std::string keyname)
+{
+	static std::map<std::string, int> convertor{ {"Up",0},{"Right",1},{"Down",2},{"Left",3} };
+	return convertor[keyname];
+}
 void Game::handleEvents()
 {
 	SDL_Event event;
@@ -104,6 +108,10 @@ void Game::handleEvents()
 	{
 		switch (event.type)
 		{
+		case SDL_KEYDOWN:
+			printf("key %s down£¡code %d\n", SDL_GetKeyName(event.key.keysym.sym),keyToDirect(SDL_GetKeyName(event.key.keysym.sym)));
+
+			break;
 		case SDL_QUIT:
 			m_bRunning = false;
 			break;

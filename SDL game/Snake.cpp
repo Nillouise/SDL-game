@@ -1,5 +1,5 @@
 #include "Snake.h"
-inline bool Snake::changedirect(int nextDirection)
+bool Snake::changedirect(int nextDirection)
 {
 	if(abs(nextDirection - direct)==2||nextDirection==direct)
 	{

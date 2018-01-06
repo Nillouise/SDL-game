@@ -67,10 +67,10 @@ void Game::render()
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
 	for(auto a:maze->getSanke())
 	{
-		TheTextureManager::Instance()->draw("snakeUnit", a.first*20, a.second*20, 20, 20, m_pRenderer);		
+		TheTextureManager::Instance()->draw("snakeUnit", a.c*20, a.r*20, 20, 20, m_pRenderer);		
 	}
 
-	TheTextureManager::Instance()->draw("ball", maze->ball.first*20,maze->ball.second*20, 20, 20, m_pRenderer);
+	TheTextureManager::Instance()->draw("ball", maze->ball.c*20,maze->ball.r*20, 20, 20, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }

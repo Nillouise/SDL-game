@@ -13,26 +13,35 @@ enum class Status
 	routine
 };
 
+class Point
+{
+public:
+	int r, c;
+	Point(int r=0, int c=0) :r(r), c(c) {}
+};
+
+class Ball :Point
+{
+};
+
 class Snake
 {
 public:
 	Snake()
 	{
-		body.push_back({ 0,0 });
+		body.push_back(Point(0,0));
 		direct = 1;
 	}
 	//从头到尾分别是0123...
-	std::list<std::pair<int, int> > body;
+	std::list<Point> body;
 	//nextDirect：0123分辨是上右下左。
 	//true:成功改变方向，false：不成功
 	bool changedirect(int nextDirection);
 	//产生的状态
-	Status walk(std::pair<int, int> ball);
+	Status walk(Point ball);
 	bool newTurn = true;
 	void setNewTurn() { newTurn = true; }
 private:
-	const int  directions[4][2]={{0,-1},{1,0},{0,1},{-1,0}};
+	const int directions[4][2]={{0,-1},{1,0},{0,1},{-1,0}};
 	int direct = 0;//与上面的数组结合，形成移动方向
 };
-
-

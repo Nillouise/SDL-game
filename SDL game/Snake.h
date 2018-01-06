@@ -28,12 +28,11 @@ public:
 	bool changedirect(int nextDirection);
 	//产生的状态
 	Status walk(std::pair<int, int> ball);
-
+	bool newTurn = true;
+	void setNewTurn() { newTurn = true; }
 private:
-
 	const int  directions[4][2]={{0,-1},{1,0},{0,1},{-1,0}};
 	int direct = 0;//与上面的数组结合，形成移动方向
-
 };
 
 

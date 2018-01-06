@@ -22,7 +22,7 @@ public:
 	bool forward();
 	std::list<std::pair<int, int>> getSanke();
 	bool init();
-	
+	void setNewTurn() { snake->setNewTurn(); }
 private:
 	Snake *snake = nullptr;
 };

@@ -24,8 +24,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 			if (m_pRenderer != 0) // renderer init success
 			{
 				std::cout << "renderer creation success\n";
-				SDL_SetRenderDrawColor(m_pRenderer,
-				                       100, 255, 255, 255);
+				SDL_SetRenderDrawColor(m_pRenderer,100, 255, 255, 255);
 			}
 			else
 			{
@@ -46,14 +45,15 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	}
 	std::cout << "init success\n";
 	m_bRunning = true; // everything inited successfully,start the main loop
-	//	m_textureManager.load("assets/animate-alpha.png",
-	//		"animate", m_pRenderer);
-	if (!TheTextureManager::Instance()->load("assets/animate-alpha.png",
-	                                         "animate", m_pRenderer))
+	if (!TheTextureManager::Instance()->load("assets/animate-alpha.png","animate", m_pRenderer))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->loadRect("rect", m_pRenderer, 10, 10, 255, 0, 0))
+	if (!TheTextureManager::Instance()->loadRect("snakeUnit", m_pRenderer, 10, 10, m_snakeColor[0], m_snakeColor[1], m_snakeColor[2]))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->loadRect("ball", m_pRenderer, 10, 10, m_ballColor[0], m_ballColor[1], m_ballColor[2]))
 	{
 		return false;
 	}
@@ -65,19 +65,12 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-	//	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle,&m_destinationRectangle);
-//	TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82,
-//	                                    m_pRenderer);
-//	TheTextureManager::Instance()->draw("rect", 50, 100, 128, 82,
-//	                                    m_pRenderer);
-//	TheTextureManager::Instance()->drawFrame("animate", 100, 100, 128, 82,
-//	                                         1, m_currentFrame, m_pRenderer);
 	for(auto a:maze->getSanke())
 	{
-		TheTextureManager::Instance()->draw("rect", a.first*20, a.second*20, 20, 20, m_pRenderer);		
+		TheTextureManager::Instance()->draw("snakeUnit", a.first*20, a.second*20, 20, 20, m_pRenderer);		
 	}
 
-	TheTextureManager::Instance()->draw("rect", maze->ball.first*20,maze->ball.second*20, 20, 20, m_pRenderer);
+	TheTextureManager::Instance()->draw("ball", maze->ball.first*20,maze->ball.second*20, 20, 20, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
@@ -103,9 +96,10 @@ void Game::update()
 		preTime = curTime;
 		if (!maze->forward())
 		{
-			m_pauseTime = 500;
+			m_pauseTime = m_init_pauseTime;
 			return;
 		}
+		maze->setNewTurn();
 	}
 }
 

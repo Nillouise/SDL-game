@@ -29,7 +29,7 @@ bool TextureManager::loadRect(std::string id, SDL_Renderer* pRenderer, int width
 {
 	SDL_Surface *pTempSurface = nullptr;
 	pTempSurface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
-	SDL_FillRect(pTempSurface, NULL, SDL_MapRGB(pTempSurface->format, 255, 0, 0));
+	SDL_FillRect(pTempSurface, NULL, SDL_MapRGB(pTempSurface->format, r, g, b));
 	SDL_Texture* pTexture =
 		SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
 	SDL_FreeSurface(pTempSurface);

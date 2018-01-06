@@ -35,6 +35,9 @@ private:
 	int m_speed = 500;
 	bool m_bRunning;
 	long long m_pauseTime;
+	long long m_init_pauseTime = 5000;
+	int m_snakeColor[3] = { 255,0,0 };
+	int m_ballColor[3] = { 255,255,0 };
 };
 
 bool load(std::string fileName, std::string id, SDL_Renderer *pRenderer);

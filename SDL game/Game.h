@@ -4,7 +4,6 @@
 #include<iostream>
 //char *imgPath = "assets/rider.bmp";
 
-
 class Game
 {
 public:
@@ -36,7 +35,7 @@ private:
 //	SDL_Rect m_destinationRectangle; // another rectangle
 
 	int m_currentFrame;
-	TextureManager m_textureManager;
+//	TextureManager m_textureManager;
 
 	bool m_bRunning;
 };

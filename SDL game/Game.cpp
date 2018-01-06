@@ -48,6 +48,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	m_textureManager.load("assets/animate-alpha.png",
 		"animate", m_pRenderer);
 
+
 //	SDL_Surface* pTempSurface = SDL_LoadBMP("assets/rider.bmp");//采用下面的函数能加载更多类型的图片。
 //	SDL_Surface* pTempSurface = IMG_Load("assets/rider.bmp");
 //	SDL_Surface* pTempSurface = IMG_Load("assets/animate-alpha.png");

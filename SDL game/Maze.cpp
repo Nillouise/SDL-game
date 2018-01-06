@@ -4,8 +4,7 @@
 std::pair<int,int> getRandomBall(int height,int width)
 {
 	static bool init = false;
-
-	std::mt19937 rng;
+	static std::mt19937 rng;
 	if (!init)
 	{
 		rng.seed(std::random_device()()); 
@@ -41,7 +40,7 @@ bool Maze::forward()
 		do
 		{
 			nextBall = getRandomBall(height, width);			
-		} while (conflict(ball, snake->body));
+		} while (conflict(nextBall, snake->body));
 		ball = nextBall;
 		return true;
 	}else if(st == Status::fail)
@@ -63,5 +62,6 @@ bool Maze::init()
 {
 	delete snake;
 	snake = new Snake();
+	ball = { 10,10 };
 	return true;
 }

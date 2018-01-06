@@ -1,13 +1,13 @@
 #include "Game.h"
 #include <iostream>
 #include <SDL_image.h>
-char *imgPath = "assets/animate-alpha.png";
+char* imgPath = "assets/animate-alpha.png";
 
 bool Game::init(const char* title, int xpos, int ypos, int width,
-	int height,bool fullScreen )
+                int height, bool fullScreen)
 {
 	int flags = 0;
-	if(fullScreen)
+	if (fullScreen)
 	{
 		flags |= SDL_WINDOW_FULLSCREEN;
 	}
@@ -16,7 +16,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	{
 		std::cout << "SDL init success\n";
 		// init the window
-		m_pWindow = SDL_CreateWindow(title, xpos, ypos,width, height, flags);
+		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 		if (m_pWindow != 0) // window init success
 		{
 			std::cout << "window creation success\n";
@@ -25,7 +25,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 			{
 				std::cout << "renderer creation success\n";
 				SDL_SetRenderDrawColor(m_pRenderer,
-					100, 255, 255, 255);
+				                       100, 255, 255, 255);
 			}
 			else
 			{
@@ -46,71 +46,87 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	}
 	std::cout << "init success\n";
 	m_bRunning = true; // everything inited successfully,start the main loop
-//	m_textureManager.load("assets/animate-alpha.png",
-//		"animate", m_pRenderer);
+	//	m_textureManager.load("assets/animate-alpha.png",
+	//		"animate", m_pRenderer);
 	if (!TheTextureManager::Instance()->load("assets/animate-alpha.png",
-		"animate", m_pRenderer))
+	                                         "animate", m_pRenderer))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->loadRect("rect", m_pRenderer,10,10,255,0,0))
+	if (!TheTextureManager::Instance()->loadRect("rect", m_pRenderer, 10, 10, 255, 0, 0))
 	{
 		return false;
 	}
-//	SDL_Surface* pTempSurface = SDL_LoadBMP("assets/rider.bmp");//采用下面的函数能加载更多类型的图片。
-//	SDL_Surface* pTempSurface = IMG_Load("assets/rider.bmp");
-//	SDL_Surface* pTempSurface = IMG_Load("assets/animate-alpha.png");
-//	SDL_Surface* pTempSurface = IMG_Load(imgPath);
-	//这里用到了Renderer，所以需要在初始化完成render后才能获取Texture
-//	m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer,pTempSurface);
-//	SDL_FreeSurface(pTempSurface);
-//	SDL_QueryTexture(m_pTexture, nullptr, nullptr, &m_sourceRectangle.w, &m_sourceRectangle.h);
-//	m_sourceRectangle.w = 128;
-//	m_destinationRectangle.x = m_sourceRectangle.x = 0;
-//	m_destinationRectangle.y = m_sourceRectangle.y = 0;
-//	m_destinationRectangle.w = m_sourceRectangle.w;
-//	m_destinationRectangle.h = m_sourceRectangle.h;
-//	m_destinationRectangle.w = 128;
-//	m_destinationRectangle.h = 82;
-
-
+	maze = new Maze(25, 25);
+	maze->init();
 	return true;
 }
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-//	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle,&m_destinationRectangle);
-	TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82,
-		m_pRenderer);
-	TheTextureManager::Instance()->draw("rect", 50, 100, 128, 82,
-		m_pRenderer);
-	TheTextureManager::Instance()->drawFrame("animate", 100, 100, 128, 82,
-		1, m_currentFrame, m_pRenderer);
+	//	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle,&m_destinationRectangle);
+//	TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82,
+//	                                    m_pRenderer);
+//	TheTextureManager::Instance()->draw("rect", 50, 100, 128, 82,
+//	                                    m_pRenderer);
+//	TheTextureManager::Instance()->drawFrame("animate", 100, 100, 128, 82,
+//	                                         1, m_currentFrame, m_pRenderer);
+	for(auto a:maze->getSanke())
+	{
+		TheTextureManager::Instance()->draw("rect", a.first*20, a.second*20, 20, 20, m_pRenderer);		
+	}
+
+	TheTextureManager::Instance()->draw("rect", maze->ball.first*20,maze->ball.second*20, 20, 20, m_pRenderer);
+
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 
 void Game::update()
 {
 	//这里用时间getTick去控制显示动画的速度。
-//	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
-	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
+	//	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+	static Uint32 preTime = 0;
+	Uint32 curTime = SDL_GetTicks();
+	m_currentFrame = int(((curTime / 100) % 6));
+	if (m_pauseTime > 0)
+	{
+		m_pauseTime--;
+		if (m_pauseTime <= 0)
+		{
+			maze->init();
+		}
+		return;
+	}
+	if (curTime / m_speed != preTime / m_speed)
+	{
+		preTime = curTime;
+		if (!maze->forward())
+		{
+			m_pauseTime = 500;
+			return;
+		}
+	}
 }
+
 int keyToDirect(std::string keyname)
 {
-	static std::map<std::string, int> convertor{ {"Up",0},{"Right",1},{"Down",2},{"Left",3} };
+	static std::map<std::string, int> convertor{{"Up",0},{"Right",1},{"Down",2},{"Left",3}};
 	return convertor[keyname];
 }
+
 void Game::handleEvents()
 {
 	SDL_Event event;
+	int keyCode = 0;
 	if (SDL_PollEvent(&event))
 	{
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
-			printf("key %s down！code %d\n", SDL_GetKeyName(event.key.keysym.sym),keyToDirect(SDL_GetKeyName(event.key.keysym.sym)));
-
+			keyCode = keyToDirect(SDL_GetKeyName(event.key.keysym.sym));
+			printf("key %s down！code %d\n", SDL_GetKeyName(event.key.keysym.sym), keyCode);
+			maze->changeDirection(keyCode);
 			break;
 		case SDL_QUIT:
 			m_bRunning = false;
@@ -128,3 +144,5 @@ void Game::clean()
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();
 }
+
+

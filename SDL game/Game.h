@@ -2,6 +2,8 @@
 #include "SDL.h"
 #include "TextureManager.h"
 #include<iostream>
+#include "Maze.h"
+
 //char *imgPath = "assets/rider.bmp";
 
 class Game
@@ -10,9 +12,7 @@ public:
 	Game() {}
 	~Game() {}
 	// simply set the running variable to true
-	void init()
-	{
-	}
+	
 	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen);
 	void render();
 	void update();
@@ -29,15 +29,12 @@ public:
 private:
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
-//
-//	SDL_Texture* m_pTexture; // the new SDL_Texture variable
-//	SDL_Rect m_sourceRectangle; // the first rectangle
-//	SDL_Rect m_destinationRectangle; // another rectangle
-
+	Maze* maze = nullptr;
 	int m_currentFrame;
-//	TextureManager m_textureManager;
-
+	//数值越小，速度越快。
+	int m_speed = 500;
 	bool m_bRunning;
+	long long m_pauseTime;
 };
 
 bool load(std::string fileName, std::string id, SDL_Renderer *pRenderer);

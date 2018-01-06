@@ -1,4 +1,5 @@
 #include "Snake.h"
+//bugFix 这里的实现由问题，应该一帧只能改变一次方向，但这里的实现会导致一帧改多次方向
 bool Snake::changedirect(int nextDirection)
 {
 	if(abs(nextDirection - direct)==2||nextDirection==direct)

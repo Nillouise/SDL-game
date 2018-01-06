@@ -29,7 +29,6 @@ Status Snake::walk(std::pair<int, int> ball)
 			return Status::fail;
 		}
 	}
-
 	body.push_front(nextStep);
 	body.pop_back();
 	return Status::routine;

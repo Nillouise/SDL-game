@@ -6,6 +6,8 @@
 class Maze
 {
 public:
+	//地图的大小
+	int height, width;
 	std::pair<int, int> ball;
 	bool changeDirection(int nextDirection);
 	//true：游戏继续进行，false:游戏结束
@@ -13,5 +15,4 @@ public:
 	std::list<std::pair<int, int>> getSanke();
 private:
 	Snake snake;
-
 };

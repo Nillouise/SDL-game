@@ -3,11 +3,18 @@
 #include <list>
 #include "Snake.h"
 #include <set>
-class Ball:Point
+class Ball:public Point
 {
 public:
-	int r, c, R, G, B;
-	Ball(int r=0,int c=0,int R=0,int G=0,int B=0):r(r),c(c),R(R),G(G),B(B){}
+	int r, c;
+	int id;
+	std::string textureId;
+	Ball(int r=0,int c=0):r(r),c(c){}
+	Ball(Point p)
+	{
+		r = p.r;
+		c = p.c;
+	}
 };
 
 class Maze

@@ -63,7 +63,7 @@ bool Maze::init()
 //	delete snake;
 //	snake = new Snake();
 //	ball = { 10,10 };
-	balls.insert(Ball(10,10,100,255,10));
-	balls.insert(Ball(15,15,100,255,10));
+	balls.insert(Ball(10,10));
+	balls.insert(Ball(15,15));
 	return true;
 }

@@ -14,9 +14,9 @@ Point getRandomBall(int height,int width)
 	std::uniform_int_distribution<std::mt19937::result_type> randomWidth(0, width-1);
 	return Point(randomHeight(rng), randomWidth(rng));
 }
-bool conflict(const Point &ball,const std::list<Point> &body)
+bool conflict(const Point &ball,const std::list<Point> &units)
 {
-	for(auto unit:body)
+	for(auto unit:units)
 	{
 		if(unit.r == ball.r && unit.c == ball.c)
 		{
@@ -25,43 +25,45 @@ bool conflict(const Point &ball,const std::list<Point> &body)
 	}
 	return false;
 }
-bool Maze::changeDirection(int nextDirection)
-{
-	return snake->changedirect(nextDirection);
-}
+//bool Maze::changeDirection(int nextDirection)
+//{
+//	return snake->changedirect(nextDirection);
+//}
 
-bool Maze::forward()
-{
-	Status st = snake->walk(ball);
-	if(st==Status::eatball)
-	{
-		Point nextBall;
-		//这里没有处理蛇把整个屏幕占满的情况，会导致死循环
-		do
-		{
-			nextBall = getRandomBall(height, width);			
-		} while (conflict(nextBall, snake->body));
-		ball = nextBall;
-		return true;
-	}else if(st == Status::fail)
-	{
-		return false;
-	}else if(st == Status::routine)
-	{
-		return true;
-	}
-	return false;
-}
+//bool Maze::forward()
+//{
+//	Status st = snake->walk(ball);
+//	if(st==Status::eatball)
+//	{
+//		Point nextBall;
+//		//这里没有处理蛇把整个屏幕占满的情况，会导致死循环
+//		do
+//		{
+//			nextBall = getRandomBall(height, width);			
+//		} while (conflict(nextBall, snake->units));
+//		ball = nextBall;
+//		return true;
+//	}else if(st == Status::fail)
+//	{
+//		return false;
+//	}else if(st == Status::routine)
+//	{
+//		return true;
+//	}
+//	return false;
+//}
 
-std::list<Point> Maze::getSanke()
-{
-	return snake->body;
-}
+//std::list<Point> Maze::getSanke()
+//{
+//	return snake->units;
+//}
 
 bool Maze::init()
 {
-	delete snake;
-	snake = new Snake();
-	ball = { 10,10 };
+//	delete snake;
+//	snake = new Snake();
+//	ball = { 10,10 };
+	balls.insert(Ball(10,10,100,255,10));
+	balls.insert(Ball(15,15,100,255,10));
 	return true;
 }

@@ -20,25 +20,24 @@ public:
 	Point(int r=0, int c=0) :r(r), c(c) {}
 };
 
-class Ball :Point
-{
-};
+
 
 class Snake
 {
 public:
+	//从头到尾分别是0123...
+	std::list<Point> body;
+	std::string textureId;
 	Snake()
 	{
 		body.push_back(Point(0,0));
 		direct = 1;
 	}
-	//从头到尾分别是0123...
-	std::list<Point> body;
 	//nextDirect：0123分辨是上右下左。
 	//true:成功改变方向，false：不成功
 	bool changedirect(int nextDirection);
 	//产生的状态
-	Status walk(Point ball);
+//	Status walk(Point ball);
 	bool newTurn = true;
 	void setNewTurn() { newTurn = true; }
 private:

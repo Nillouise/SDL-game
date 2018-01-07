@@ -65,12 +65,12 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-	for(auto a:maze->getSanke())
-	{
-		TheTextureManager::Instance()->draw("snakeUnit", a.c*20, a.r*20, 20, 20, m_pRenderer);		
-	}
+//	for(auto a:maze->getSanke())
+//	{
+//		TheTextureManager::Instance()->draw("snakeUnit", a.c*20, a.r*20, 20, 20, m_pRenderer);		
+//	}
 
-	TheTextureManager::Instance()->draw("ball", maze->ball.c*20,maze->ball.r*20, 20, 20, m_pRenderer);
+//	TheTextureManager::Instance()->draw("ball", maze->ball.c*20,maze->ball.r*20, 20, 20, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
@@ -78,7 +78,7 @@ void Game::render()
 void Game::update()
 {
 	//这里用时间getTick去控制显示动画的速度。
-	//	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+	//m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 	static Uint32 preTime = 0;
 	Uint32 curTime = SDL_GetTicks();
 	m_currentFrame = int(((curTime / 100) % 6));
@@ -94,12 +94,12 @@ void Game::update()
 	if (curTime / m_speed != preTime / m_speed)
 	{
 		preTime = curTime;
-		if (!maze->forward())
-		{
-			m_pauseTime = m_init_pauseTime;
-			return;
-		}
-		maze->setNewTurn();
+//		if (!maze->forward())
+//		{
+//			m_pauseTime = m_init_pauseTime;
+//			return;
+//		}
+//		maze->setNewTurn();
 	}
 }
 
@@ -120,7 +120,7 @@ void Game::handleEvents()
 		case SDL_KEYDOWN:
 			keyCode = keyToDirect(SDL_GetKeyName(event.key.keysym.sym));
 			printf("key %s down！code %d\n", SDL_GetKeyName(event.key.keysym.sym), keyCode);
-			maze->changeDirection(keyCode);
+//			maze->changeDirection(keyCode);
 			break;
 		case SDL_QUIT:
 			m_bRunning = false;
@@ -138,5 +138,3 @@ void Game::clean()
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();
 }
-
-

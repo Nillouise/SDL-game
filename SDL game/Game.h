@@ -11,8 +11,7 @@ class Game
 public:
 	Game() {}
 	~Game() {}
-	// simply set the running variable to true
-	
+	//╪стьм╪пн╣х
 	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen);
 	void render();
 	void update();

@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Conn.cpp" />
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Maze.cpp" />
@@ -159,6 +160,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Conn.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Snake.h" />

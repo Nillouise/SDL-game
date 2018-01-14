@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include<iostream>
 #include "Maze.h"
+#include "Interact.h"
 
 //char *imgPath = "assets/rider.bmp";
 
@@ -28,7 +29,8 @@ public:
 private:
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
-	Maze* maze = nullptr;
+//	Maze* m_maze = nullptr;
+	Interact *m_interact = nullptr;
 	int m_currentFrame;
 	//数值越小，速度越快。
 	int m_speed = 500;

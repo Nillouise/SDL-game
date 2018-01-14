@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include <SDL_image.h>
-char* imgPath = "assets/animate-alpha.png";
+const char* imgPath = "assets/animate-alpha.png";
 
 bool Game::init(const char* title, int xpos, int ypos, int width,
                 int height, bool fullScreen)
@@ -49,28 +49,40 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->loadRect("snakeUnit", m_pRenderer, 10, 10, m_snakeColor[0], m_snakeColor[1], m_snakeColor[2]))
+	if (!TheTextureManager::Instance()->loadRect("snakeUnit", m_pRenderer, 20, 20, m_snakeColor[0], m_snakeColor[1], m_snakeColor[2]))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->loadRect("ball", m_pRenderer, 10, 10, m_ballColor[0], m_ballColor[1], m_ballColor[2]))
+	if (!TheTextureManager::Instance()->loadRect("ball", m_pRenderer, 20, 20, m_ballColor[0], m_ballColor[1], m_ballColor[2]))
 	{
 		return false;
 	}
-	maze = new Maze(25, 25);
-	maze->init();
+	m_interact = new Interact();
+	m_interact->m_maze = new Maze(25,25);
+	m_interact->m_maze->balls.push_back(Ball(10, 10));
+	m_interact->m_maze->balls.push_back(Ball(15, 15));
+	m_interact->m_snakeMap[0] = new Snake(Point());
+	m_interact->m_aliveSnakeCount = 1;
+
 	return true;
 }
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-//	for(auto a:maze->getSanke())
-//	{
-//		TheTextureManager::Instance()->draw("snakeUnit", a.c*20, a.r*20, 20, 20, m_pRenderer);		
-//	}
+	for(auto a:m_interact->m_maze->balls)
+	{
+		TheTextureManager::Instance()->draw("ball", a.c * 20, a.r * 20, 20, 20, m_pRenderer);
+	}
+	for (auto a :m_interact->m_snakeMap)
+	{
+		auto b = a.second;
+		for(auto a:b->body)
+		{
+			TheTextureManager::Instance()->draw("snakeUnit", a.c * 20, a.r * 20, 20, 20, m_pRenderer);
+		}
+	}
 
-//	TheTextureManager::Instance()->draw("ball", maze->ball.c*20,maze->ball.r*20, 20, 20, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
@@ -87,19 +99,25 @@ void Game::update()
 		m_pauseTime--;
 		if (m_pauseTime <= 0)
 		{
-			maze->init();
+			delete m_interact;
+			m_interact = new Interact();
+			m_interact->m_maze = new Maze(25, 25);
+			m_interact->m_maze->balls.push_back(Ball(10, 10));
+			m_interact->m_maze->balls.push_back(Ball(15, 15));
+			m_interact->m_snakeMap[0] = new Snake(Point());
+			m_interact->m_aliveSnakeCount = 1;
 		}
 		return;
 	}
 	if (curTime / m_speed != preTime / m_speed)
 	{
 		preTime = curTime;
-//		if (!maze->forward())
-//		{
-//			m_pauseTime = m_init_pauseTime;
-//			return;
-//		}
-//		maze->setNewTurn();
+		if (m_interact->forward()==Status::fail)
+		{
+			m_pauseTime = m_init_pauseTime;
+			return;
+		}
+		m_interact->setNewTurn();
 	}
 }
 
@@ -112,15 +130,16 @@ int keyToDirect(std::string keyname)
 void Game::handleEvents()
 {
 	SDL_Event event;
-	int keyCode = 0;
+	int direct = 0;
 	if (SDL_PollEvent(&event))
 	{
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
-			keyCode = keyToDirect(SDL_GetKeyName(event.key.keysym.sym));
-			printf("key %s down£¡code %d\n", SDL_GetKeyName(event.key.keysym.sym), keyCode);
-//			maze->changeDirection(keyCode);
+			direct = keyToDirect(SDL_GetKeyName(event.key.keysym.sym));
+			printf("key %s down£¡code %d\n", SDL_GetKeyName(event.key.keysym.sym), direct);
+//			m_maze->changeDirection(keyCode);
+			m_interact->input(0, direct);
 			break;
 		case SDL_QUIT:
 			m_bRunning = false;

@@ -15,9 +15,9 @@ using asio::ip::tcp;
 Game* g_game = nullptr;
 int main(int argc, char* argv[])
 {
-	//加了下面两句即可在/SUBSYSTEM:WINDOWS 的条件下用控制台输出
 //	ConnMain();
 
+	//加了下面两句即可在/SUBSYSTEM:WINDOWS 的条件下用控制台输出
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);
 	g_game = new Game();

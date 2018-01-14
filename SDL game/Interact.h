@@ -26,10 +26,12 @@ public:
 	bool input(int id,int direct);
 	std::vector<Snake*> getSnakes();
 	Maze* getMaze();
-	
-private:
-	std::map<int, Snake*> m_snakeMap;
-	bool conflictWithAllObject(Point p);
+	bool init(int R,int C,int ballNum);
 	Maze *m_maze;
 	bool m_newTurn = true;
+	std::map<int, Snake*> m_snakeMap;
+	//ºÏ≤È «∑Ò ß∞‹¡À
+	bool failCheck() const;
+private:
+	bool conflictWithAllObject(Point p);
 };

@@ -1,7 +1,7 @@
 #include "Interact.h"
 #include <random>
 
-Point getRandomBall(int height, int width)
+static Point getRandomBall(int height, int width)
 {
 	static bool init = false;
 	static std::mt19937 rng;
@@ -15,7 +15,7 @@ Point getRandomBall(int height, int width)
 	return Point(randomHeight(rng), randomWidth(rng));
 }
 
-bool conflict(const Point &a, const Point &b)
+static bool conflict(const Point a, const Point b)
 {
 	if (a.c == b.c&&a.r == b.r)
 	{
@@ -28,7 +28,7 @@ bool conflict(const Point &a, const Point &b)
 }
 
 
-bool conflict(const Point &point, const std::list<Point> &units)
+static bool conflict(const Point &point, const std::list<Point> &units)
 {
 	for (auto unit : units)
 	{
@@ -46,7 +46,7 @@ Status Interact::forward()
 {
 	for(auto a:m_snakeMap)
 	{
-		Snake snake = *a.second;
+		Snake &snake = *a.second;
 		snake.curDirect = snake.nextDirect;
 	}
 	//判断是否有蛇死亡
@@ -55,13 +55,17 @@ Status Interact::forward()
 	int ballDisappearCount = 0;
 	for(auto a: m_snakeMap)
 	{
-		Snake snake = *a.second;
+//		Snake snake = *a.second;//这是错的，这是复制拷贝，没有修改原来的值
+		Snake &snake = *a.second;
 		bool ballConflicted = false;
 		bool snakeConflicted = false;
 		Point nextStep = snake.nextStep();
+		//当前的蛇碰到ball就立刻吃掉
+		m_maze->balls.begin();
 		for(auto b = m_maze->balls.begin();b!=m_maze->balls.end();)
 		{
-			if (conflict(nextStep, *b))
+			Ball real = *b;
+			if (conflict(nextStep, real))
 			{
 				ballConflicted = true;
 				b = m_maze->balls.erase(b);
@@ -70,6 +74,7 @@ Status Interact::forward()
 				++b;
 			}
 		}
+		//碰到别的蛇或者碰到自己的身体，这里其实没有正确实现，因为当两条蛇相连得时候，他也当碰到
 		for(auto b:m_snakeMap)
 		{
 			if(conflict(nextStep,b.second->body))
@@ -97,9 +102,10 @@ Status Interact::forward()
 		{
 			p = getRandomBall(m_maze->height, m_maze->width);
 		} while (conflictWithAllObject(p));
-		m_maze->balls.insert(p);
+		m_maze->balls.push_back(p);
 	}
-	if(snakeDeadCount>=m_aliveSnakeCount)
+	m_aliveSnakeCount -= snakeDeadCount;
+	if(failCheck())
 	{
 		return Status::fail;
 	}
@@ -107,7 +113,6 @@ Status Interact::forward()
 	{
 		return Status::eatball;
 	}
-
 	return Status::routine;
 }
 
@@ -126,7 +131,7 @@ bool canChangeDirect(int curDirect,int nextDirect)
 bool Interact::input(int id, int direct)
 {
 	Snake *pSnake = nullptr;
-	auto iter = m_snakeMap.find(id);
+	const auto &iter = m_snakeMap.find(id);
 	if(iter == m_snakeMap.end())
 	{
 		return false;
@@ -141,7 +146,27 @@ bool Interact::input(int id, int direct)
 	return false;
 }
 
+bool Interact::failCheck() const
+{
+	return m_aliveSnakeCount <= 0;
+}
+
 bool Interact::conflictWithAllObject(Point p)
 {
+	for(auto &a:m_maze->balls)
+	{
+		if(conflict(p, a))
+		{
+			return true;
+		}
+	}
+	for(auto &a:m_snakeMap)
+	{
+		auto &b = a.second;
+		if(conflict(p,b->body))
+		{
+			return true;
+		}
+	}
 	return false;
 }

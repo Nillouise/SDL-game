@@ -39,6 +39,9 @@
     <ClCompile Include="Interact.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Starter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Interact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Starter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

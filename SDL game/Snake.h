@@ -23,10 +23,9 @@ public:
 	int nextDirect = 1;
 	//0代表死亡，1代表活着
 	int status = 1;
-	bool newTurn = true;
-	Snake()
+	Snake(Point p)
 	{
-		body.push_back(Point(0,0));
+		body.push_back(p);
 	}
 	Point nextStep();
 	//nextDirect：0123分辨是上右下左

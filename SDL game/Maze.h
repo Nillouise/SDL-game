@@ -6,10 +6,10 @@
 class Ball:public Point
 {
 public:
-	int r, c;
+//	int r, c;
 	int id;
 	std::string textureId;
-	Ball(int r=0,int c=0):r(r),c(c){}
+	Ball(int r=0,int c=0):Point(r,c){}
 	Ball(Point p)
 	{
 		r = p.r;
@@ -24,7 +24,7 @@ public:
 	//地图的大小
 	int height, width;
 //	Point ball;
-	std::set<Ball> balls;
+	std::list<Ball> balls;
 	Maze(int height,int width):height(height),width(width)
 	{
 //		snake = new Snake();

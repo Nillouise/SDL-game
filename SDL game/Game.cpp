@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include <SDL_image.h>
+#include"Robot.h"
 const char* imgPath = "assets/animate-alpha.png";
 
 bool Game::init(const char* title, int xpos, int ypos, int width,
@@ -59,6 +60,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	}
 	m_interact = new Interact();
 	m_interact->m_maze = new Maze(25,25);
+
+	m_interact->m_maze->balls.push_back(Ball(4, 4));
 	m_interact->m_maze->balls.push_back(Ball(10, 10));
 	m_interact->m_maze->balls.push_back(Ball(15, 15));
 	m_interact->m_snakeMap[0] = new Snake(Point());
@@ -89,6 +92,7 @@ void Game::render()
 
 void Game::update()
 {
+	robotInput();
 	//这里用时间getTick去控制显示动画的速度。
 	//m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 	static Uint32 preTime = 0;

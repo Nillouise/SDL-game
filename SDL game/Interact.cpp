@@ -118,7 +118,7 @@ Status Interact::forward()
 
 void Interact::setNewTurn()
 {
-	m_newTurn = true;
+	m_Turn++;
 }
 bool canChangeDirect(int curDirect,int nextDirect)
 {

@@ -153,6 +153,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Interact.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Starter.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Interact.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="Robot.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="Starter.h" />
     <ClInclude Include="TextureManager.h" />

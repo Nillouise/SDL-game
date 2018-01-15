@@ -28,7 +28,7 @@ public:
 	Maze* getMaze();
 	bool init(int R,int C,int ballNum);
 	Maze *m_maze;
-	bool m_newTurn = true;
+	long long m_Turn = 0;
 	std::map<int, Snake*> m_snakeMap;
 	//ºÏ≤È «∑Ò ß∞‹¡À
 	bool failCheck() const;

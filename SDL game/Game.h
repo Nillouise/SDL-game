@@ -26,10 +26,6 @@ public:
 	void drawFrame(std::string id, int x, int y, int width,
 		int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);
-private:
-	SDL_Window* m_pWindow;
-	SDL_Renderer* m_pRenderer;
-//	Maze* m_maze = nullptr;
 	Interact *m_interact = nullptr;
 	int m_currentFrame;
 	//数值越小，速度越快。
@@ -39,6 +35,10 @@ private:
 	long long m_init_pauseTime = 5000;
 	int m_snakeColor[3] = { 255,0,0 };
 	int m_ballColor[3] = { 255,255,0 };
+private:
+	SDL_Window* m_pWindow;
+	SDL_Renderer* m_pRenderer;
+//	Maze* m_maze = nullptr;
 };
 
 bool load(std::string fileName, std::string id, SDL_Renderer *pRenderer);

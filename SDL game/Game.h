@@ -30,14 +30,18 @@ public:
 	int m_currentFrame;
 	//数值越小，速度越快。
 	int m_speed = 500;
+	int m_gameStage = 1;
+	std::string m_inputText;
 	bool m_bRunning;
 	long long m_pauseTime;
-	long long m_init_pauseTime = 5000;
+	long long m_init_pauseTime = 500;
 	int m_snakeColor[3] = { 255,0,0 };
 	int m_ballColor[3] = { 255,255,0 };
 private:
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
+	//返回要跳转的游戏阶段
+	int handleStage0Key(const std::string& key);
 //	Maze* m_maze = nullptr;
 };
 

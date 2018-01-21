@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
 	robotStart(0);
 	g_game = new Game();
 	g_game->init("Chapter 1", 100, 100, 500, 500, false);
+
 	while (g_game->running())
 	{
 		g_game->handleEvents();

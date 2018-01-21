@@ -21,16 +21,16 @@ int main(int argc, char* argv[])
 	//加了下面两句即可在/SUBSYSTEM:WINDOWS 的条件下用控制台输出
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);
-	robotStart(0);
-	g_game = new Game();
-	g_game->init("Chapter 1", 100, 100, 500, 500, false);
-
-	while (g_game->running())
-	{
-		g_game->handleEvents();
-		g_game->update();
-		g_game->render();
-	}
-	g_game->clean();
+//	robotStart(0);
+//	g_game = new Game();
+//	g_game->init("Chapter 1", 100, 100, 500, 500, false);
+//
+//	while (g_game->running())
+//	{
+//		g_game->handleEvents();
+//		g_game->update();
+//		g_game->render();
+//	}
+//	g_game->clean();
 	return 0;
 }

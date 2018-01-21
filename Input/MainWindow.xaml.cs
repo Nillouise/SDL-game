@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Input
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private Dictionary<string, string> dict;
+
+        private void initDataFromSettingFile()
+        {
+
+            dict = new Dictionary<string, string>();
+            try
+            {
+                string[] items = File.ReadAllLines(@"setting.ini");
+                foreach (var it in items)
+                {
+                    string[] keyValue = it.Split('=');
+                    if (keyValue.Length < 2)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        dict[keyValue[0]] = keyValue[1];
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+//                throw;
+            }
+        }
+
+        private string getSettingVal(string key)
+        {
+            string res;
+            return dict.TryGetValue(key, out res) ? res : "";
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            initDataFromSettingFile();
+            remoteServerIP.Text = getSettingVal("remoteServerIP");
+            remoteServerPort.Text = getSettingVal("remoteServerPort");
+            isSetMyComputerToServer.IsChecked = getSettingVal("isSetMyComputerToServer") == "true";
+            openPort.Text = getSettingVal("openPort");
+        }
+
+        private void saveSetting()
+        {
+            string[] lines = new string[4];
+            lines[0] = "remoteServerIP=" + remoteServerIP.Text;
+            lines[1] = "remoteServerPort=" + remoteServerPort.Text;
+            lines[2] = "isSetMyComputerToServer=" +
+                       ((bool) isSetMyComputerToServer.IsChecked ? "true" : "false");
+            lines[3] = "openPort=" + openPort.Text;
+            System.IO.File.WriteAllLines(@"setting.ini", lines, Encoding.UTF8);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            saveSetting();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            saveSetting();
+            System.Diagnostics.Process.Start("SDL game");
+        }
+    }
+}

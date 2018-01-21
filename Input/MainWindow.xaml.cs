@@ -92,7 +92,14 @@ namespace Input
         private void button_Click(object sender, RoutedEventArgs e)
         {
             saveSetting();
-            System.Diagnostics.Process.Start("SDL game");
+            try
+            {
+                System.Diagnostics.Process.Start("SDL game");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }

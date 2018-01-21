@@ -73,13 +73,15 @@ namespace Input
 
         private void saveSetting()
         {
+            var utf8WithoutBom = new System.Text.UTF8Encoding(false);
+
             string[] lines = new string[4];
             lines[0] = "remoteServerIP=" + remoteServerIP.Text;
             lines[1] = "remoteServerPort=" + remoteServerPort.Text;
             lines[2] = "isSetMyComputerToServer=" +
                        ((bool) isSetMyComputerToServer.IsChecked ? "true" : "false");
             lines[3] = "openPort=" + openPort.Text;
-            System.IO.File.WriteAllLines(@"setting.ini", lines, Encoding.UTF8);
+            System.IO.File.WriteAllLines(@"setting.ini", lines, utf8WithoutBom);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

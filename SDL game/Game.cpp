@@ -49,6 +49,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	m_bRunning = true; // everything inited successfully,start the main loop
 	if (!TheTextureManager::Instance()->load("assets/animate-alpha.png", "animate", m_pRenderer))
 	{
+		std::cout << "load assets folder error";
 		return false;
 	}
 	if (!TheTextureManager::Instance()->loadRect("snakeUnit", m_pRenderer, 20, 20, m_snakeColor[0], m_snakeColor[1], m_snakeColor[2]))

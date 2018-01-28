@@ -8,18 +8,23 @@
         Title="ServerSet" Height="350" Width="525" Initialized="Window_Initialized" Closing="Window_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="333*"/>
-            <ColumnDefinition Width="184*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="ServerIP" VerticalAlignment="Top" RenderTransformOrigin="-0.99,-3.652"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="ServerIP" VerticalAlignment="Top" RenderTransformOrigin="-0.99,-3.652" Height="16" Width="47"/>
         <TextBox x:Name="remoteServerIP" HorizontalAlignment="Left" Height="23" Margin="75,7,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,38,0,0" TextWrapping="Wrap" Text="ServerPort" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,38,0,0" TextWrapping="Wrap" Text="ServerPort" VerticalAlignment="Top" Height="16" Width="60"/>
         <TextBox x:Name="remoteServerPort" HorizontalAlignment="Left" Height="23" Margin="75,38,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
 
-        <CheckBox x:Name="isSetMyComputerToServer" Content="set my computer to server" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,159,0,0" TextWrapping="Wrap" Text="Open port" VerticalAlignment="Top"/>
+        <CheckBox x:Name="isSetMyComputerToServer" Content="set my computer to server" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top" Height="16" Width="168"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,159,0,0" TextWrapping="Wrap" Text="Open port" VerticalAlignment="Top" Height="16" Width="60"/>
         <TextBox x:Name="openPort" HorizontalAlignment="Left" Height="23" Margin="75,159,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="button" Content="Start" HorizontalAlignment="Left" Margin="10,288,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button x:Name="button" Content="Start" HorizontalAlignment="Left" Margin="10,288,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" Height="22"/>
+        <TextBox x:Name="robotNumber" HorizontalAlignment="Left" Height="23" Margin="387,182,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="327,185,0,0" TextWrapping="Wrap" Text="Number:" VerticalAlignment="Top" Height="16" Width="55"/>
+        <CheckBox x:Name="robotStart" Content="RobotStart" HorizontalAlignment="Left" Margin="350,138,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="299,159,0,0" TextWrapping="Wrap" Text="(auto set my computer to server)" VerticalAlignment="Top" Width="208"/>
+        <Separator HorizontalAlignment="Left" Height="20" Margin="0,103,0,0" VerticalAlignment="Top" Width="517"/>
 
     </Grid>
 </Window>

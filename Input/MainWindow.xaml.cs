@@ -69,18 +69,23 @@ namespace Input
             remoteServerPort.Text = getSettingVal("remoteServerPort");
             isSetMyComputerToServer.IsChecked = getSettingVal("isSetMyComputerToServer") == "true";
             openPort.Text = getSettingVal("openPort");
+            robotStart.IsChecked = getSettingVal("robotStart") == "true";
+            robotNumber.Text = getSettingVal("robotNumber");
         }
 
         private void saveSetting()
         {
             var utf8WithoutBom = new System.Text.UTF8Encoding(false);
 
-            string[] lines = new string[4];
+            string[] lines = new string[6];
             lines[0] = "remoteServerIP=" + remoteServerIP.Text;
             lines[1] = "remoteServerPort=" + remoteServerPort.Text;
             lines[2] = "isSetMyComputerToServer=" +
                        ((bool) isSetMyComputerToServer.IsChecked ? "true" : "false");
             lines[3] = "openPort=" + openPort.Text;
+            lines[4] = "robotStart=" + ((bool) robotStart.IsChecked ? "true" : "false");
+            lines[5] = "robotNumber=" + robotNumber.Text;
+
             System.IO.File.WriteAllLines(@"setting.ini", lines, utf8WithoutBom);
         }
 

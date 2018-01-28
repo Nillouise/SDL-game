@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "GlobalVariable.h"
 #include <iostream>
 #include <SDL_image.h>
 #include"Robot.h"
@@ -60,17 +61,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	{
 		return false;
 	}
-	m_interact = new Interact();
-	m_interact->m_maze = new Maze(25, 25);
 
-	m_interact->m_maze->balls.push_back(Ball(4, 4));
-	m_interact->m_maze->balls.push_back(Ball(10, 10));
-	m_interact->m_maze->balls.push_back(Ball(15, 15));
-	m_interact->m_snakeMap[0] = new Snake(Point());
-	m_interact->m_snakeMap[1] = new Snake(Point());
-	m_interact->m_aliveSnakeCount = 2;
-
-	return true;
+	return reset();
 }
 
 void Game::render()
@@ -120,13 +112,7 @@ void Game::update()
 			m_pauseTime--;
 			if (m_pauseTime <= 0)
 			{
-				delete m_interact;
-				m_interact = new Interact();
-				m_interact->m_maze = new Maze(25, 25);
-				m_interact->m_maze->balls.push_back(Ball(10, 10));
-				m_interact->m_maze->balls.push_back(Ball(15, 15));
-				m_interact->m_snakeMap[0] = new Snake(Point());
-				m_interact->m_aliveSnakeCount = 1;
+				reset();
 			}
 			return;
 		}
@@ -178,7 +164,7 @@ void Game::handleEvents()
 				direct = keyToDirect(SDL_GetKeyName(event.key.keysym.sym));
 				printf("key %s down£¡code %d\n", SDL_GetKeyName(event.key.keysym.sym), direct);
 				//			m_maze->changeDirection(keyCode);
-				m_interact->input(1, direct);
+				m_interact->input(0, direct);
 				break;
 			case SDL_QUIT:
 				m_bRunning = false;
@@ -220,4 +206,29 @@ int Game::handleStage0Key(const std::string& key)
 		}
 		return 0;
 	}
+}
+
+bool Game::reset()
+{
+	delete m_interact;
+	m_interact = new Interact();
+	m_interact->m_maze = new Maze(25, 25);
+
+	m_interact->m_maze->balls.push_back(Ball(4, 4));
+	m_interact->m_maze->balls.push_back(Ball(10, 10));
+	m_interact->m_maze->balls.push_back(Ball(15, 15));
+
+
+	m_interact->m_aliveSnakeCount = 1;
+	m_interact->m_snakeMap[0] = new Snake(Point());
+	if (g_starter->robot_start())
+	{
+		m_interact->m_aliveSnakeCount += g_starter->robot_number();
+		for (int i = 1; i <= g_starter->robot_number(); i++)
+		{
+			m_interact->m_snakeMap[i] = new Snake(Point(i + 3, i + 3));
+			addRobot(i);
+		}
+	}
+	return true;
 }

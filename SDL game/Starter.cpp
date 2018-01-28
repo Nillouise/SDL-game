@@ -43,6 +43,8 @@ int Starter::init()
 		remoteServerPort = stoi(bucket["remoteServerPort"]);
 		isSetMyComputerToServer = bucket["isSetMyComputerToServer"] == "true" ? true : false;
 		openPort = stoi(bucket["openPort"]);
+		robotStart = bucket["robotStart"] == "true" ? true : false;
+		robotNumber = stoi(bucket["robotNumber"]);
 	}
 	catch (...)
 	{

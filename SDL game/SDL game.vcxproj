@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="Conn.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GlobalVariable.h" />
     <ClInclude Include="Interact.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Robot.h" />

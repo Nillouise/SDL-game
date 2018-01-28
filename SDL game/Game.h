@@ -42,6 +42,7 @@ private:
 	SDL_Renderer* m_pRenderer;
 	//返回要跳转的游戏阶段
 	int handleStage0Key(const std::string& key);
+	bool reset();
 //	Maze* m_maze = nullptr;
 };
 

@@ -11,8 +11,31 @@ private:
 	int remoteServerPort;
 	bool isSetMyComputerToServer;
 	int openPort;
+	int robotNumber;
+	bool robotStart;
 
 public:
+
+	int robot_number() const
+	{
+		return robotNumber;
+	}
+
+	void set_robot_number(int robot_number)
+	{
+		robotNumber = robot_number;
+	}
+
+	bool robot_start() const
+	{
+		return robotStart;
+	}
+
+	void set_robot_start(bool robot_start)
+	{
+		robotStart = robot_start;
+	}
+
 	std::string remote_server_ip() const
 	{
 		return remoteServerIP;

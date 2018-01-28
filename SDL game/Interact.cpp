@@ -95,6 +95,18 @@ Status Interact::forward()
 			snake.body.pop_back();
 		}
 	}
+	
+	for(auto it = m_snakeMap.begin();it!=m_snakeMap.end();)
+	{
+		if(it->second->status == 0)
+		{
+			it = m_snakeMap.erase(it);
+		}else
+		{
+			it++;
+		}
+	}
+
 	for(int i=0;i<ballDisappearCount;i++)
 	{
 		Point p;

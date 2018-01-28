@@ -60,15 +60,24 @@ void TextureManager::drawText(const std::string& text, int x, int y, SDL_Rendere
 {
 	//std::cout << "ERROR:" << TTF_GetError() << std::endl; //此函数可以获得TTF执行过程中的错误
 	
-	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, text.c_str(), White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
+	static std::map<std::string, SDL_Texture*> cache;
 
-	SDL_Texture* Message = SDL_CreateTextureFromSurface(pRenderer, surfaceMessage); //now you can convert it into a texture
+	if(cache.find(text)==cache.end())
+	{
+		SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, text.c_str(), White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
+		SDL_Texture* Message = SDL_CreateTextureFromSurface(pRenderer, surfaceMessage); //now you can convert it into a texture
+		SDL_FreeSurface(surfaceMessage);
+		cache[text] = Message;
+	}
 
+
+	SDL_Texture* Message = cache[text]; //now you can convert it into a texture
+	
 	SDL_Rect Message_rect; //create a rect
 	Message_rect.x = x;  //controls the rect's x coordinate 
 	Message_rect.y = y; // controls the rect's y coordinte
-	Message_rect.w = text.length()*20; // controls the width of the rect
-	Message_rect.h = 100; // controls the height of the rect
+	Message_rect.w = text.length()*16; // controls the width of the rect
+	Message_rect.h = 30; // controls the height of the rect
 
 						  //Mind you that (0,0) is on the top left of the window/screen, think a rect as the text's box, that way it would be very simple to understance
 

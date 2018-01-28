@@ -76,10 +76,28 @@ void Game::render()
 		break;
 	case 1:
 		SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
+		//暂停时，绘制相应的信息
+		if (g_starter->is_set_my_computer_to_server())
+		{
+			if (m_pauseTime > 0)
+			{
+				TheTextureManager::Instance()->drawText("press S to start game", 10, 60, m_pRenderer, { 255,255,255,100 });
+				TheTextureManager::Instance()->drawText("press Q to quit game",10, 90, m_pRenderer,{255,255,255,100});
+			}
+		}
+		else
+		{
+			if (m_pauseTime > 0)
+			{
+				TheTextureManager::Instance()->drawText("wait for server to start game", 5, 5, m_pRenderer);
+			}
+		}
+		//绘制ball
 		for (auto a : m_interact->m_maze->balls)
 		{
 			TheTextureManager::Instance()->draw("ball", a.c * 20, a.r * 20, 20, 20, m_pRenderer);
 		}
+		//绘制snake
 		for (auto a : m_interact->m_snakeMap)
 		{
 			auto b = a.second;
@@ -98,33 +116,45 @@ void Game::update()
 	switch (m_gameStage)
 	{
 	case 0:
-
 		break;
 	case 1:
-		robotInput();
-		//这里用时间getTick去控制显示动画的速度。
-		//m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
-		static Uint32 preTime = 0;
-		Uint32 curTime = SDL_GetTicks();
-		m_currentFrame = int(((curTime / 100) % 6));
-		if (m_pauseTime > 0)
+		//主服务器的逻辑
+		if (g_starter->is_set_my_computer_to_server())
 		{
-			m_pauseTime--;
-			if (m_pauseTime <= 0)
+			robotInput();
+			static Uint32 preTime = 0;
+			//配合startGameMonitor，监听是否应该新开游戏
+			if (m_pauseTime > 0)
 			{
-				reset();
+				if (m_newRound)
+				{
+					reset();
+					m_pauseTime = 0;
+					m_newRound = false;
+				}
+				else
+				{
+					return;
+				}
 			}
-			return;
-		}
-		if (curTime / m_speed != preTime / m_speed)
-		{
-			preTime = curTime;
-			if (m_interact->forward() == Status::fail)
+			//这里用时间getTick去控制显示动画的速度。
+			//m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+			//这里设置更新速度
+			Uint32 curTime = SDL_GetTicks();
+			m_currentFrame = int(((curTime / 100) % 6));
+			if (curTime / m_speed != preTime / m_speed)
 			{
-				m_pauseTime = m_init_pauseTime;
-				return;
+				preTime = curTime;
+				Status curSnakeStatus;
+				Status gameStatus = m_interact->forward(curSnakeStatus);
+				if (gameStatus == Status::finished)
+				{
+					m_pauseTime = m_init_pauseTime;
+					m_newRound = false;
+					return;
+				}
+				m_interact->setNewTurn();
 			}
-			m_interact->setNewTurn();
 		}
 		break;
 	}
@@ -142,6 +172,7 @@ void Game::handleEvents()
 	int direct = 0;
 	if (SDL_PollEvent(&event))
 	{
+		std::string keyname;
 		switch (m_gameStage)
 		{
 		case 0:
@@ -161,10 +192,12 @@ void Game::handleEvents()
 			switch (event.type)
 			{
 			case SDL_KEYDOWN:
-				direct = keyToDirect(SDL_GetKeyName(event.key.keysym.sym));
-				printf("key %s down！code %d\n", SDL_GetKeyName(event.key.keysym.sym), direct);
+				keyname = SDL_GetKeyName(event.key.keysym.sym);
+				direct = keyToDirect(keyname);
+				printf("key %s down！code %d\n", keyname.c_str(), direct);
 				//			m_maze->changeDirection(keyCode);
 				m_interact->input(0, direct);
+				startGameMonitor(keyname);
 				break;
 			case SDL_QUIT:
 				m_bRunning = false;
@@ -194,11 +227,11 @@ int Game::handleStage0Key(const std::string& key)
 		std::cout << m_inputText << std::endl;
 		return 0;
 	}
-	else if(key == "Return")
+	else if (key == "Return")
 	{
-
 		return 1;
-	}else
+	}
+	else
 	{
 		if (key.length() > 0)
 		{
@@ -208,8 +241,24 @@ int Game::handleStage0Key(const std::string& key)
 	}
 }
 
+void Game::startGameMonitor(const std::string& key)
+{
+	if (g_starter->is_set_my_computer_to_server() && m_pauseTime > 0)
+	{
+		if (key == "S")
+		{
+			m_newRound = true;
+		}
+		else if (key == "Q")
+		{
+			m_bRunning = false;
+		}
+	}
+}
+
 bool Game::reset()
 {
+	m_pauseTime = m_init_pauseTime;
 	delete m_interact;
 	m_interact = new Interact();
 	m_interact->m_maze = new Maze(25, 25);
@@ -230,5 +279,6 @@ bool Game::reset()
 			addRobot(i);
 		}
 	}
+	m_interact->m_oriAliveSnakeCount = m_interact->m_aliveSnakeCount;
 	return true;
 }

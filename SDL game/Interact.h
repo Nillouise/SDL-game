@@ -13,14 +13,16 @@ enum class Status
 	//吃到球
 	eatball,
 	//没事发生
-	routine
+	routine,
+	finished,
 };
 
 class Interact
 {
 public:
 	int m_aliveSnakeCount = 0;
-	Status forward();
+	int m_oriAliveSnakeCount = 0;
+	Status forward(Status &curSnakeStatus);
 	void setNewTurn();
 	//通过id操作snake
 	bool input(int id,int direct);
@@ -31,7 +33,7 @@ public:
 	long long m_Turn = 0;
 	std::map<int, Snake*> m_snakeMap;
 	//检查是否失败了
-	bool failCheck() const;
+	Status failCheck() const;
 private:
 	bool conflictWithAllObject(Point p);
 };

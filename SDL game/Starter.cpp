@@ -44,6 +44,10 @@ int Starter::init()
 		isSetMyComputerToServer = bucket["isSetMyComputerToServer"] == "true" ? true : false;
 		openPort = stoi(bucket["openPort"]);
 		robotStart = bucket["robotStart"] == "true" ? true : false;
+		if(robotStart)
+		{
+			isSetMyComputerToServer = true;
+		}
 		robotNumber = stoi(bucket["robotNumber"]);
 	}
 	catch (...)

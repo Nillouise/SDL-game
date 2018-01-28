@@ -7,6 +7,7 @@
 
 //char *imgPath = "assets/rider.bmp";
 
+
 class Game
 {
 public:
@@ -27,6 +28,7 @@ public:
 		int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);
 	Interact *m_interact = nullptr;
+
 	int m_currentFrame;
 	//数值越小，速度越快。
 	int m_speed = 500;
@@ -35,6 +37,7 @@ public:
 	bool m_bRunning;
 	long long m_pauseTime;
 	long long m_init_pauseTime = 500;
+	bool m_newRound = false;
 	int m_snakeColor[3] = { 255,0,0 };
 	int m_ballColor[3] = { 255,255,0 };
 private:
@@ -42,7 +45,9 @@ private:
 	SDL_Renderer* m_pRenderer;
 	//返回要跳转的游戏阶段
 	int handleStage0Key(const std::string& key);
+	void startGameMonitor(const std::string&key);
 	bool reset();
+
 //	Maze* m_maze = nullptr;
 };
 

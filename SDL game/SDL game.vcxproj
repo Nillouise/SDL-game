@@ -74,16 +74,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Project\SDL game\SDL game\SDL2_ttf-2.0.14\include;D:\Project\SDL game\asio;D:\Project\SDL game\SDL game\SDL2-2.0.7\include;D:\Project\SDL game\SDL game\SDL2_image-2.0.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL2_image-2.0.2\lib\x64;$(ProjectDir)\SDL2-2.0.7\lib\x64;$(ProjectDir)\SDL2_ttf-2.0.14\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libevent\include;$(ProjectDir)\SDL2_ttf-2.0.14\include;$(SolutionDir)\asio;$(ProjectDir)\SDL2-2.0.7\include;$(ProjectDir)\SDL2_image-2.0.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libevent\lib;$(ProjectDir)\SDL2_image-2.0.2\lib\x64;$(ProjectDir)\SDL2-2.0.7\lib\x64;$(ProjectDir)\SDL2_ttf-2.0.14\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\Project\SDL game\SDL game\SDL2_ttf-2.0.14\include;D:\Project\SDL game\asio;D:\Project\SDL game\SDL game\SDL2-2.0.7\include;D:\Project\SDL game\SDL game\SDL2_image-2.0.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL2_image-2.0.2\lib\x64;$(ProjectDir)\SDL2-2.0.7\lib\x64;$(ProjectDir)\SDL2_ttf-2.0.14\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libevent\include;$(ProjectDir)\SDL2_ttf-2.0.14\include;$(SolutionDir)\asio;$(ProjectDir)\SDL2-2.0.7\include;$(ProjectDir)\SDL2_image-2.0.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libevent\lib;$(ProjectDir)\SDL2_image-2.0.2\lib\x64;$(ProjectDir)\SDL2-2.0.7\lib\x64;$(ProjectDir)\SDL2_ttf-2.0.14\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -109,7 +109,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_ttf.lib;libevent.lib;libevent_core.lib;libevent_extras.lib;ws2_32.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,7 +144,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_ttf.lib;libevent.lib;libevent_core.lib;libevent_extras.lib;ws2_32.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -154,6 +154,7 @@
     <ClCompile Include="Interact.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Starter.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Interact.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Robot.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="Starter.h" />
     <ClInclude Include="TextureManager.h" />

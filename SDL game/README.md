@@ -27,3 +27,8 @@
 #define ASIO_HAS_STD_SHARED_PTR
 #define ASIO_HAS_STD_TYPE_TRAITS
 
+libevent
+1 这库在官网的版本有bug的，在github上的反而没有（在release 的tag目录的版本），以后找库多用github，不要在官网上找了！！！！
+2 用到网络库的程序基本都要额外连接 ws2_32.lib wsock32.lib
+3 解决我问题的网页 http://blog.csdn.net/xiaoluer/article/details/56280681
+4 编译这库用的是vs 自带的nmake /a /f Makefile.namke 命令就行，不需要cmake等花里胡哨的，可能别的库也都支持nmake了吧

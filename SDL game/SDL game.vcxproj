@@ -168,6 +168,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GlobalVariable.h" />
     <ClInclude Include="Interact.h" />
+    <ClInclude Include="Libevent.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="Server.h" />

@@ -2,7 +2,8 @@
 #include <stdlib.h>  
 #include <errno.h>  
 #include <assert.h>  
-
+#define ASIO_STANDALONE 
+#include <asio.hpp>
 #include <event2/event.h>  
 #include <event2/bufferevent.h>  
 

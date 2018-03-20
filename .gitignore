@@ -21,6 +21,9 @@
 bld/
 [Bb]in/
 [Oo]bj/
+!/SDL2/lib/*
+!/SDL2_image/lib/*
+!/SDL_ttf/lib/*
 
 /SDL game/wxMSW-3.1.0_vc140_x64_Dev
 

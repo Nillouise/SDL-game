@@ -1,22 +1,135 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="头文件">
+    <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="资源文件">
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\ttf">
+      <UniqueIdentifier>{92e91868-8a9b-4ba7-bc0d-7c026ae161e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\assets">
+      <UniqueIdentifier>{33eb2512-12db-4928-9e06-08b76215fbf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Conn.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="framework.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interact.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Maze.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Starter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Conn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Maze.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Starter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resource\ttf\OpenSans-Bold.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-BoldItalic.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-ExtraBold.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-ExtraBoldItalic.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-Italic.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-Light.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-LightItalic.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-Regular.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-Semibold.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+    <Font Include="resource\ttf\OpenSans-SemiboldItalic.ttf">
+      <Filter>Resource Files\ttf</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\assets\animate-alpha.png">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+    <Image Include="resource\assets\rider.bmp">
+      <Filter>Resource Files\assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\ttf\Apache License Version 2.txt">
+      <Filter>Resource Files\ttf</Filter>
+    </Text>
   </ItemGroup>
 </Project>

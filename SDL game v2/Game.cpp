@@ -48,7 +48,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width,
 	}
 	std::cout << "init success\n";
 	m_bRunning = true; // everything inited successfully,start the main loop
-	if (!TheTextureManager::Instance()->load("assets/animate-alpha.png", "animate", m_pRenderer))
+	if (!TheTextureManager::Instance()->load("resource/assets/animate-alpha.png", "animate", m_pRenderer))
 	{
 		std::cout << "load assets folder error";
 		return false;

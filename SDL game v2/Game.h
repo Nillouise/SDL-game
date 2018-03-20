@@ -5,6 +5,7 @@
 #include "Maze.h"
 #include "Interact.h"
 
+//char *imgPath = "assets/rider.bmp";
 
 
 class Game

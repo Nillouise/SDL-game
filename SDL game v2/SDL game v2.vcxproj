@@ -19,31 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Conn.cpp" />
-    <ClCompile Include="framework.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Interact.cpp" />
-    <ClCompile Include="Maze.cpp" />
-    <ClCompile Include="Robot.cpp" />
-    <ClCompile Include="Server.cpp" />
-    <ClCompile Include="Snake.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Starter.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Conn.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GlobalVariable.h" />
-    <ClInclude Include="Interact.h" />
-    <ClInclude Include="Maze.h" />
-    <ClInclude Include="Robot.h" />
-    <ClInclude Include="Server.h" />
-    <ClInclude Include="Snake.h" />
-    <ClInclude Include="Starter.h" />
-    <ClInclude Include="TextureManager.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="resource\ttf\Apache License Version 2.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +36,9 @@
   <ItemGroup>
     <Image Include="resource\assets\animate-alpha.png" />
     <Image Include="resource\assets\rider.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -114,13 +92,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\SDL2_image\include;$(SolutionDir)\SDL2_ttf\include;$(SolutionDir)\SDL2\include;$(SolutionDir)\asio;$(IncludePath)</IncludePath>
+    <IncludePath>I:\Project\SDL-game\boost;$(SolutionDir)SDL2_image\include;$(SolutionDir)SDL2_ttf\include;$(SolutionDir)SDL2\include;$(SolutionDir)asio;$(IncludePath)</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <LibraryPath>$(SolutionDir)\SDL2_image\lib\x64;$(SolutionDir)\SDL2\lib\x64;$(SolutionDir)\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)boost\lib;$(SolutionDir)SDL2_image\lib\x64;$(SolutionDir)SDL2\lib\x64;$(SolutionDir)SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\SDL2_image\include;$(SolutionDir)\SDL2_ttf\include;$(SolutionDir)\SDL2\include;$(SolutionDir)\asio;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\SDL2_image\lib\x64;$(SolutionDir)\SDL2\lib\x64;$(SolutionDir)\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>I:\Project\SDL-game\boost;$(SolutionDir)SDL2_image\include;$(SolutionDir)SDL2_ttf\include;$(SolutionDir)SDL2\include;$(SolutionDir)asio;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)boost\lib;$(SolutionDir)SDL2_image\lib\x64;$(SolutionDir)SDL2\lib\x64;$(SolutionDir)SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -128,9 +106,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>ASIO_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_ttf.lib;libboost_wserialization-vc140-mt-gd-x64-1_66.lib;libboost_serialization-vc140-mt-gd-x64-1_66.lib;libboost_regex-vc140-mt-gd-x64-1_66.lib;libboost_date_time-vc140-mt-gd-x64-1_66.lib;libboost_context-vc140-mt-gd-x64-1_66.lib;libboost_coroutine-vc140-mt-gd-x64-1_66.lib;libboost_system-vc140-mt-gd-x64-1_66.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>

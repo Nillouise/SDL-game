@@ -1,43 +1,107 @@
-#include "Game.h"
-#include"Robot.h"
-#include <cstdio>
-#include "Conn.h"
-#include"GlobalVariable.h"
-#include "Starter.h"
+//
+// echo_server.cpp
+// ~~~~~~~~~~~~~~~
+//
+// Copyright (c) 2003-2016 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
+#include <asio/io_service.hpp>
+#include <asio/ip/tcp.hpp>
+#include <asio/spawn.hpp>
+#include <asio/steady_timer.hpp>
+#include <asio/write.hpp>
+#include <iostream>
+#include <memory>
+
 using asio::ip::tcp;
 
-Game* g_game = nullptr;
-Starter* g_starter = nullptr;
-#pragma warning (disable : 4996)
+class session : public std::enable_shared_from_this<session>
+{
+public:
+	explicit session(tcp::socket socket)
+		: socket_(std::move(socket)),
+		timer_(socket_.get_io_service()),
+		strand_(socket_.get_io_service())
+	{
+	}
+
+	void go()
+	{
+		auto self(shared_from_this());
+		asio::spawn(strand_,
+			[this, self](asio::yield_context yield)
+		{
+			try
+			{
+				char data[128];
+				for (;;)
+				{
+					timer_.expires_from_now(std::chrono::seconds(10));
+					std::size_t n = socket_.async_read_some(asio::buffer(data), yield);
+					asio::async_write(socket_, asio::buffer(data, n), yield);
+				}
+			}
+			catch (std::exception& e)
+			{
+				socket_.close();
+				timer_.cancel();
+			}
+		});
+
+		asio::spawn(strand_,
+			[this, self](asio::yield_context yield)
+		{
+			while (socket_.is_open())
+			{
+				asio::error_code ignored_ec;
+				timer_.async_wait(yield[ignored_ec]);
+				if (timer_.expires_from_now() <= std::chrono::seconds(0))
+					socket_.close();
+			}
+		});
+	}
+
+private:
+	tcp::socket socket_;
+	asio::steady_timer timer_;
+	asio::io_service::strand strand_;
+};
+
 int main(int argc, char* argv[])
 {
-//	ConnMain();
-//	加了下面两句即可在/SUBSYSTEM:WINDOWS 的条件下用控制台输出
-	AllocConsole();
-	freopen("CONOUT$", "w", stdout);
-	//初始化win32套接字
-#ifdef _WIN32
-
-	WORD wVersionRequested;
-	WSADATA wsaData;
-
-	wVersionRequested = MAKEWORD(2, 2);
-
-	(void)WSAStartup(wVersionRequested, &wsaData);
-#endif
-
-	g_starter = new Starter();
-	g_starter->init();
-
-	g_game = new Game();
-	g_game->init("Chapter 1", 100, 100, 500, 500, false);
-
-	while (g_game->running())
+	try
 	{
-		g_game->handleEvents();
-		g_game->update();
-		g_game->render();
+		if (argc != 2)
+		{
+			std::cerr << "Usage: echo_server <port>\n";
+			return 1;
+		}
+
+		asio::io_service io_service;
+
+		asio::spawn(io_service,
+			[&](asio::yield_context yield)
+		{
+			tcp::acceptor acceptor(io_service,
+				tcp::endpoint(tcp::v4(), std::atoi(argv[1])));
+
+			for (;;)
+			{
+				asio::error_code ec;
+				tcp::socket socket(io_service);
+				acceptor.async_accept(socket, yield[ec]);
+				if (!ec) std::make_shared<session>(std::move(socket))->go();
+			}
+		});
+
+		io_service.run();
 	}
-	g_game->clean();
+	catch (std::exception& e)
+	{
+		std::cerr << "Exception: " << e.what() << "\n";
+	}
+
 	return 0;
 }
